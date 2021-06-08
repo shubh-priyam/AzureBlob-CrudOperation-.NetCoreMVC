@@ -1,0 +1,42 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+@model ImageModel
+<div class="container">
+    @if (ViewBag.status == "deleted")
+     {
+        <h3 style="color:red" class="card-header text-center">@ViewBag.status</h3>
+        <br><br>
+        <a class="btn btn-outline-primary ml-5" asp-controller="Home" asp-action="index">back</a>
+     }
+
+    else
+    {
+        <form method="post" enctype="multipart/form-data" asp-controller="Home" asp-action="Index">
+            <div class="form-group">
+                <label class="form-label">Upload a file</label>
+                <div class="custom-file">
+                    <input asp-for="file" class="form-control">
+                </div>
+                <span asp-validation-for="file" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Upload" class="btn btn-primary" />
+                </div>
+            </div>
+        </form>
+
+        if (ViewBag.imageurl != null)
+        {
+            <div>
+                <h4>uploaded image</h4>
+                <img src="@ViewBag.imageurl" alt="@ViewBag.imagename" height="300" width="400" />
+                <p>Image url : @ViewBag.imageurl</p>
+                <a class="btn btn-outline-danger" asp-controller="Home" asp-action="Delete" asp-route-name="@ViewBag.imagename">Delete blob image</a>
+            </div>
+        }
+    }
+
+</div>
+
